@@ -67,3 +67,4 @@ vcpkg_installed/
 Testing/
 .cache/
 naive
+shared_memory
