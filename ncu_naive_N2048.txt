@@ -1,0 +1,18 @@
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 37427 (/home/loafer/SGEEM/naive_2048)
+==PROF== Profiling "naive_mmul": 0%....50%....100% - 3 passes
+Naive SGEMM kernel takes 1041.346191 ms
+Success!
+==PROF== Disconnected from process 37427
+[37427] naive_2048@127.0.0.1
+  naive_mmul(const float *, const float *, float *, int) (64, 64, 1)x(32, 32, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Warning: Data collection happened without fixed GPU frequencies. Profiling results may be inconsistent.
+    Section: Command line profiler metrics
+    -------------------------------------------------- ----------- ------------
+    Metric Name                                        Metric Unit Metric Value
+    -------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed           %         0.96
+    lts__t_sector_hit_rate.pct                                   %        97.60
+    -------------------------------------------------- ----------- ------------
+
