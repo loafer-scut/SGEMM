@@ -87,16 +87,27 @@ int main()
     cudaEvent_t start,stop;
     cudaEventCreate(&start);
     cudaEventCreate(&stop);
-    cudaEventRecord(start);
 
-    shared_memory_mmul<<<grid,block>>>(d_A,d_B,d_C,DSIZE);
-    
-    cudaEventRecord(stop);
-    cudaEventSynchronize(stop);
-    float milliseconds=0;
-    cudaEventElapsedTime(&milliseconds,start,stop);
+    for(int w=0;w<3;w++) shared_memory_mmul<<<grid,block>>>(d_A,d_B,d_C,DSIZE);
+    cudaCheckErrors("warmup launch");
+    cudaDeviceSynchronize();
 
-    printf("Shared Memory SGEMM kernel takes %f ms\n",milliseconds);
+    const int ITERS = 20;
+    float best = 1e30f, total = 0.f;
+    for(int it=0;it<ITERS;it++){
+        cudaEventRecord(start);
+        shared_memory_mmul<<<grid,block>>>(d_A,d_B,d_C,DSIZE);
+        cudaEventRecord(stop);
+        cudaEventSynchronize(stop);
+        float ms = 0.f;
+        cudaEventElapsedTime(&ms,start,stop);
+        if(ms < best) best = ms;
+        total += ms;
+    }
+    printf("Tiling N=%d  min=%.3f ms  avg=%.3f ms  %.1f GFLOPS\n",
+           DSIZE, best, total/ITERS, 2.0*DSIZE*DSIZE*DSIZE/(best*1e6));
+    printf("RES,%d,%.4f,%.4f,%.1f\n", DSIZE, best, total/ITERS,
+           2.0*DSIZE*DSIZE*DSIZE/(best*1e6));
 
     cudaMemcpy(h_C,d_C,DSIZE*DSIZE*sizeof(float),cudaMemcpyDeviceToHost);
     
