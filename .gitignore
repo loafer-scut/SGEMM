@@ -70,12 +70,17 @@ naive_*
 shared_memory_*
 
 # Executables
-naive
-naive_*
-shared
-shared_*
-shared_memory
-shared_memory_*
+# 编译产物（benchmark.sh 已统一输出到 build/，这段兜底根目录的旧二进制）
+naive_[0-9]*
+shared_[0-9]*
+tiling_[0-9]*
+/naive
+/shared
+/shared_memory
+/t
+/devinfo
+!naive_shared_plot.py
+
 
 # Python
 .venv/
