@@ -1,0 +1,52 @@
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 66830 (/home/loafer/SGEEM/naive_8192)
+==PROF== Profiling "naive_mmul": 0%..
+==WARNING== Launching the workload is taking more time than expected. If this continues to hang, terminate the profile and re-try by profiling the range of all related launches using '--replay-mode range'. See https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#replay for more details.
+..50%....100% - 10 passes
+Naive SGEMM kernel takes 18170.101562 ms
+Success!
+==PROF== Disconnected from process 66830
+[66830] naive_8192@127.0.0.1
+  naive_mmul(const float *, const float *, float *, int) (256, 256, 1)x(32, 32, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Warning: Data collection happened without fixed GPU frequencies. Profiling results may be inconsistent.
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- -------------
+    Metric Name             Metric Unit  Metric Value
+    ----------------------- ----------- -------------
+    DRAM Frequency                  Ghz          9.62
+    SM Frequency                    Ghz          2.75
+    Elapsed Cycles                cycle    3427999249
+    Memory Throughput                 %         77.13
+    DRAM Throughput                   %         18.12
+    Duration                          s          1.24
+    L1/TEX Cache Throughput           %         76.42
+    L2 Cache Throughput               %          5.50
+    SM Active Cycles              cycle 3459124929.50
+    Compute (SM) Throughput           %         77.13
+    ----------------------- ----------- -------------
+
+    INF   Compute and Memory are well-balanced: To reduce runtime, both computation and memory traffic must be reduced. 
+          Check both the Compute Workload Analysis and Memory Workload Analysis sections.                               
+
+    Section: Memory Workload Analysis
+    --------------------------------------- ----------- ------------
+    Metric Name                             Metric Unit Metric Value
+    --------------------------------------- ----------- ------------
+    Local Memory Spilling Requests                                 0
+    Local Memory Spilling Request Overhead            %            0
+    L2 Sector Promotion Misses                        %            0
+    Shared Memory Spilling Requests                                0
+    Shared Memory Spilling Request Overhead           %            0
+    Memory Throughput                           Gbyte/s        55.79
+    Mem Busy                                          %        38.57
+    Max Bandwidth                                     %        77.13
+    L1/TEX Hit Rate                                   %        94.99
+    L2 Persisting Size                            Mbyte         6.29
+    L2 Compression Success Rate                       %            0
+    L2 Compression Ratio                                           0
+    L2 Compression Input Sectors                 sector            0
+    L2 Hit Rate                                       %        49.66
+    Mem Pipes Busy                                    %        77.13
+    --------------------------------------- ----------- ------------
+

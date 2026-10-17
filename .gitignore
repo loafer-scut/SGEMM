@@ -66,5 +66,17 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+naive_*
+shared_memory_*
+
+# Executables
 naive
+naive_*
+shared
+shared_*
 shared_memory
+shared_memory_*
+
+# Python
+.venv/
+__pycache__/

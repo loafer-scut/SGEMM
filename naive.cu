@@ -2,6 +2,10 @@
 #include<cuda_runtime.h>
 #include<stdlib.h>
 
+#ifndef DSIZE
+#define DSIZE 1024
+#endif
+
 //CheckErrors Module
 #define cudaCheckErrors(msg)\
     do {\
@@ -16,7 +20,7 @@
     }while(0)
 
 
-const int DSIZE=1024;
+
 const int block_size=32;
 const float A_val=3.0f;
 const float B_val=2.0f;

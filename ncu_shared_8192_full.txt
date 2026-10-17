@@ -1,0 +1,50 @@
+==WARNING== Note: Running with uncontrolled GPU caches. Profiling results may be inconsistent.
+==WARNING== Note: Running with unmodified GPU clocks. If not controlled otherwise, profiling results may be inconsistent.
+==PROF== Connected to process 68050 (/home/loafer/SGEEM/shared_memory_8192)
+==PROF== Profiling "shared_memory_mmul": 0%....50%....100% - 10 passes
+Shared Memory SGEMM kernel takes 12699.138672 ms
+Success!
+==PROF== Disconnected from process 68050
+[68050] shared_memory_8192@127.0.0.1
+  shared_memory_mmul(const float *, const float *, float *, int) (256, 256, 1)x(32, 32, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Warning: Data collection happened without fixed GPU frequencies. Profiling results may be inconsistent.
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- -------------
+    Metric Name             Metric Unit  Metric Value
+    ----------------------- ----------- -------------
+    DRAM Frequency                  Ghz         11.99
+    SM Frequency                    Ghz          2.76
+    Elapsed Cycles                cycle    2391093829
+    Memory Throughput                 %         76.05
+    DRAM Throughput                   %         20.91
+    Duration                         ms        864.63
+    L1/TEX Cache Throughput           %         76.13
+    L2 Cache Throughput               %          6.34
+    SM Active Cycles              cycle 2387477113.08
+    Compute (SM) Throughput           %         76.05
+    ----------------------- ----------- -------------
+
+    INF   Compute and Memory are well-balanced: To reduce runtime, both computation and memory traffic must be reduced. 
+          Check both the Compute Workload Analysis and Memory Workload Analysis sections.                               
+
+    Section: Memory Workload Analysis
+    --------------------------------------- ----------- ------------
+    Metric Name                             Metric Unit Metric Value
+    --------------------------------------- ----------- ------------
+    Local Memory Spilling Requests                                 0
+    Local Memory Spilling Request Overhead            %            0
+    L2 Sector Promotion Misses                        %            0
+    Shared Memory Spilling Requests                                0
+    Shared Memory Spilling Request Overhead           %            0
+    Memory Throughput                           Gbyte/s        80.22
+    Mem Busy                                          %        45.43
+    Max Bandwidth                                     %        76.05
+    L1/TEX Hit Rate                                   %            0
+    L2 Persisting Size                            Mbyte         6.29
+    L2 Compression Success Rate                       %            0
+    L2 Compression Ratio                                           0
+    L2 Compression Input Sectors                 sector            0
+    L2 Hit Rate                                       %        49.68
+    Mem Pipes Busy                                    %        76.05
+    --------------------------------------- ----------- ------------
+
