@@ -1,0 +1,39 @@
+==PROF== Connected to process 30509 (/home/loafer/SGEEM/build/v2_1024)
+==PROF== Profiling "shared_memory_mmul" - 0 (1/1): 0%....50%....100% - 9 passes
+Tiling N=1024  min=1.501 ms  avg=67.850 ms  1431.1 GFLOPS
+RES,1024,1.5005,67.8502,1431.1
+Success!
+==PROF== Disconnected from process 30509
+[30509] v2_1024@127.0.0.1
+  shared_memory_mmul(const float *, const float *, float *, int) (32, 32, 1)x(32, 32, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Section: Command line profiler metrics
+    --------------------------------------------------- ----------- ------------
+    Metric Name                                         Metric Unit Metric Value
+    --------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed            %         0.64
+    l1tex__throughput.avg.pct_of_peak_sustained_elapsed           %        86.07
+    lts__throughput.avg.pct_of_peak_sustained_elapsed             %         6.16
+    sm__throughput.avg.pct_of_peak_sustained_elapsed              %        86.07
+    smsp__issue_active.avg.pct_of_peak_sustained_active           %        21.37
+    --------------------------------------------------- ----------- ------------
+
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- ------------
+    Metric Name             Metric Unit Metric Value
+    ----------------------- ----------- ------------
+    DRAM Frequency                  Ghz        11.99
+    SM Frequency                    Ghz         1.21
+    Elapsed Cycles                cycle      4131984
+    Memory Throughput                 %        86.07
+    DRAM Throughput                   %         0.76
+    Duration                         ms         3.40
+    L1/TEX Cache Throughput           %        87.43
+    L2 Cache Throughput               %         6.16
+    SM Active Cycles              cycle   4067796.62
+    Compute (SM) Throughput           %        86.07
+    ----------------------- ----------- ------------
+
+    INF   This workload is utilizing greater than 80.0% of the available compute or memory performance of this device.  
+          To further improve performance, work will likely need to be shifted from the most utilized to another unit.   
+          Start by analyzing workloads in the Compute Workload Analysis section.                                        
+

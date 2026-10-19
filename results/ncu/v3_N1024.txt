@@ -1,0 +1,38 @@
+==PROF== Connected to process 30686 (/home/loafer/SGEEM/build/v3_1024)
+==PROF== Profiling "regtile_mmul" - 0 (1/1): 0%....50%....100% - 9 passes
+register tiling N=1024  min=0.365 ms  avg=79.297 ms  5879.5 GFLOPS
+RES,1024,0.3652,79.2967,5879.5
+==PROF== Disconnected from process 30686
+[30686] v3_1024@127.0.0.1
+  regtile_mmul(const float *, const float *, float *, int) (32, 32, 1)x(8, 8, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Section: Command line profiler metrics
+    --------------------------------------------------- ----------- ------------
+    Metric Name                                         Metric Unit Metric Value
+    --------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed            %         2.92
+    l1tex__throughput.avg.pct_of_peak_sustained_elapsed           %        90.93
+    lts__throughput.avg.pct_of_peak_sustained_elapsed             %        26.05
+    sm__throughput.avg.pct_of_peak_sustained_elapsed              %        71.09
+    smsp__issue_active.avg.pct_of_peak_sustained_active           %        50.93
+    --------------------------------------------------- ----------- ------------
+
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- ------------
+    Metric Name             Metric Unit Metric Value
+    ----------------------- ----------- ------------
+    DRAM Frequency                  Ghz        11.99
+    SM Frequency                    Ghz         1.21
+    Elapsed Cycles                cycle       911727
+    Memory Throughput                 %        90.93
+    DRAM Throughput                   %         3.43
+    Duration                         us       750.40
+    L1/TEX Cache Throughput           %        92.74
+    L2 Cache Throughput               %        26.05
+    SM Active Cycles              cycle    893799.81
+    Compute (SM) Throughput           %        71.09
+    ----------------------- ----------- ------------
+
+    INF   This workload is utilizing greater than 80.0% of the available compute or memory performance of this device.  
+          To further improve performance, work will likely need to be shifted from the most utilized to another unit.   
+          Start by analyzing L1 in the Memory Workload Analysis section.                                                
+
