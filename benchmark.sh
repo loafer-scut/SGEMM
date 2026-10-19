@@ -10,10 +10,13 @@ echo "NVCC: $(nvcc --version | tail -1)"
 
 printf "N,min_ms,avg_ms,gflops\n" > results/v1_naive.csv
 printf "N,min_ms,avg_ms,gflops\n" > results/v2_tiling.csv
+printf "N,min_ms,avg_ms,gflops\n" > results/v3_regtile.csv
 
 for SIZE in "${SIZES[@]}"; do
     nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE naive.cu          -o build/v1_$SIZE
     nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE shared_memory.cu  -o build/v2_$SIZE
+    nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE register_tiling.cu -o build/v3_$SIZE
+    ./build/v3_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v3_regtile.csv
     ./build/v1_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v1_naive.csv
     ./build/v2_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v2_tiling.csv
     echo "  N=$SIZE done"

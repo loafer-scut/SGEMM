@@ -79,9 +79,8 @@ tiling_[0-9]*
 /shared_memory
 /t
 /devinfo
-!naive_shared_plot.py
 
 
 # Python
 .venv/
-__pycache__/
+__pycache__//v*_[0-9]*
