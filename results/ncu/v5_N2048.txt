@@ -1,0 +1,71 @@
+==PROF== Connected to process 68074 (/home/loafer/SGEEM/build/v5_2048)
+==PROF== Profiling "regtile_mmul" - 0 (1/1): 0%....50%....100% - 9 passes
+register tiling N=2048  min=2.402 ms  avg=63.582 ms  7152.0 GFLOPS
+RES,2048,2.4021,63.5824,7152.0
+==PROF== Disconnected from process 68074
+[68074] v5_2048@127.0.0.1
+  regtile_mmul(const float *, const float *, float *, int) (16, 16, 1)x(16, 16, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Section: Command line profiler metrics
+    --------------------------------------------------- ----------- ------------
+    Metric Name                                         Metric Unit Metric Value
+    --------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed            %         2.21
+    l1tex__throughput.avg.pct_of_peak_sustained_elapsed           %        88.42
+    lts__throughput.avg.pct_of_peak_sustained_elapsed             %         9.68
+    sm__throughput.avg.pct_of_peak_sustained_elapsed              %        61.81
+    --------------------------------------------------- ----------- ------------
+
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- ------------
+    Metric Name             Metric Unit Metric Value
+    ----------------------- ----------- ------------
+    DRAM Frequency                  Ghz        11.99
+    SM Frequency                    Ghz         1.21
+    Elapsed Cycles                cycle      6280952
+    Memory Throughput                 %        88.42
+    DRAM Throughput                   %         2.59
+    Duration                         ms         5.17
+    L1/TEX Cache Throughput           %        90.14
+    L2 Cache Throughput               %         9.68
+    SM Active Cycles              cycle   6161034.23
+    Compute (SM) Throughput           %        61.81
+    ----------------------- ----------- ------------
+
+    INF   This workload is utilizing greater than 80.0% of the available compute or memory performance of this device.  
+          To further improve performance, work will likely need to be shifted from the most utilized to another unit.   
+          Start by analyzing L1 in the Memory Workload Analysis section.                                                
+
+    Section: Launch Statistics
+    -------------------------------- --------------- ---------------
+    Metric Name                          Metric Unit    Metric Value
+    -------------------------------- --------------- ---------------
+    Block Size                                                   256
+    Cluster Scheduling Policy                           PolicySpread
+    Cluster Size                                                   0
+    Function Cache Configuration                     CachePreferNone
+    Grid Size                                                    256
+    Preferred Cluster Size                                         0
+    Registers Per Thread             register/thread             128
+    Shared Memory Configuration Size           Kbyte          102.40
+    Driver Shared Memory Per Block       Kbyte/block            1.02
+    Dynamic Shared Memory Per Block       byte/block               0
+    Static Shared Memory Per Block       Kbyte/block           32.77
+    # SMs                                         SM              26
+    Stack Size                                                  1024
+    Threads                                   thread           65536
+    # TPCs                                                        13
+    Enabled TPC IDs                                              all
+    Uses Green Context                                             0
+    Waves Per SM                                                4.92
+    -------------------------------- --------------- ---------------
+
+    OPT   Est. Speedup: 20%                                                                                             
+          A wave of thread blocks is defined as the maximum number of blocks that can be executed in parallel on the    
+          target GPU. The number of blocks in a wave depends on the number of multiprocessors and the theoretical       
+          occupancy of the kernel. This kernel launch results in 4 full waves and a partial wave of 49 thread blocks.   
+          Under the assumption of a uniform execution duration of all thread blocks, this partial wave may account for  
+          up to 20.0% of the total runtime of this kernel. Try launching a grid with no partial wave. The overall       
+          impact of this tail effect also lessens with the number of full waves executed for a grid. See the Hardware   
+          Model (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for     
+          more details on launch configurations.                                                                        
+

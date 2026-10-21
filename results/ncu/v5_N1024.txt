@@ -1,0 +1,72 @@
+==PROF== Connected to process 67904 (/home/loafer/SGEEM/build/v5_1024)
+==PROF== Profiling "regtile_mmul" - 0 (1/1): 0%....50%....100% - 9 passes
+register tiling N=1024  min=0.435 ms  avg=78.120 ms  4932.7 GFLOPS
+RES,1024,0.4354,78.1201,4932.7
+==PROF== Disconnected from process 67904
+[67904] v5_1024@127.0.0.1
+  regtile_mmul(const float *, const float *, float *, int) (8, 8, 1)x(16, 16, 1), Context 1, Stream 7, Device 0, CC 12.0
+    Section: Command line profiler metrics
+    --------------------------------------------------- ----------- ------------
+    Metric Name                                         Metric Unit Metric Value
+    --------------------------------------------------- ----------- ------------
+    dram__throughput.avg.pct_of_peak_sustained_elapsed            %         2.64
+    l1tex__throughput.avg.pct_of_peak_sustained_elapsed           %        69.27
+    lts__throughput.avg.pct_of_peak_sustained_elapsed             %         8.93
+    sm__throughput.avg.pct_of_peak_sustained_elapsed              %        48.28
+    --------------------------------------------------- ----------- ------------
+
+    Section: GPU Speed Of Light Throughput
+    ----------------------- ----------- ------------
+    Metric Name             Metric Unit Metric Value
+    ----------------------- ----------- ------------
+    DRAM Frequency                  Ghz        11.99
+    SM Frequency                    Ghz         1.21
+    Elapsed Cycles                cycle      1007857
+    Memory Throughput                 %        69.27
+    DRAM Throughput                   %         3.10
+    Duration                         us       829.60
+    L1/TEX Cache Throughput           %        85.02
+    L2 Cache Throughput               %         8.93
+    SM Active Cycles              cycle    821104.15
+    Compute (SM) Throughput           %        48.28
+    ----------------------- ----------- ------------
+
+    OPT   Memory is more heavily utilized than Compute: Look at the Memory Workload Analysis section to identify the L1 
+          bottleneck. Check memory replay (coalescing) metrics to make sure you're efficiently utilizing the bytes      
+          transferred. Also consider whether it is possible to do more work per memory access (kernel fusion) or        
+          whether there are values you can (re)compute.                                                                 
+
+    Section: Launch Statistics
+    -------------------------------- --------------- ---------------
+    Metric Name                          Metric Unit    Metric Value
+    -------------------------------- --------------- ---------------
+    Block Size                                                   256
+    Cluster Scheduling Policy                           PolicySpread
+    Cluster Size                                                   0
+    Function Cache Configuration                     CachePreferNone
+    Grid Size                                                     64
+    Preferred Cluster Size                                         0
+    Registers Per Thread             register/thread             128
+    Shared Memory Configuration Size           Kbyte          102.40
+    Driver Shared Memory Per Block       Kbyte/block            1.02
+    Dynamic Shared Memory Per Block       byte/block               0
+    Static Shared Memory Per Block       Kbyte/block           32.77
+    # SMs                                         SM              26
+    Stack Size                                                  1024
+    Threads                                   thread           16384
+    # TPCs                                                        13
+    Enabled TPC IDs                                              all
+    Uses Green Context                                             0
+    Waves Per SM                                                1.23
+    -------------------------------- --------------- ---------------
+
+    OPT   Est. Speedup: 50%                                                                                             
+          A wave of thread blocks is defined as the maximum number of blocks that can be executed in parallel on the    
+          target GPU. The number of blocks in a wave depends on the number of multiprocessors and the theoretical       
+          occupancy of the kernel. This kernel launch results in 1 full waves and a partial wave of 13 thread blocks.   
+          Under the assumption of a uniform execution duration of all thread blocks, this partial wave may account for  
+          up to 50.0% of the total runtime of this kernel. Try launching a grid with no partial wave. The overall       
+          impact of this tail effect also lessens with the number of full waves executed for a grid. See the Hardware   
+          Model (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#metrics-hw-model) description for     
+          more details on launch configurations.                                                                        
+
