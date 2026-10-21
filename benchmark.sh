@@ -13,6 +13,7 @@ printf "N,min_ms,avg_ms,gflops\n" > results/v2_tiling.csv
 printf "N,min_ms,avg_ms,gflops\n" > results/v3_regtile.csv
 printf "N,min_ms,avg_ms,gflops\n" > results/v4_regtile_8x8.csv
 printf "N,min_ms,avg_ms,gflops\n" > results/v5_regtile_128tile.csv
+printf "N,min_ms,avg_ms,gflops\n" > results/cublas_sgemm.csv
 
 for SIZE in "${SIZES[@]}"; do
     nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE naive.cu               -o build/v1_$SIZE
@@ -20,12 +21,15 @@ for SIZE in "${SIZES[@]}"; do
     nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE register_tiling.cu     -o build/v3_$SIZE
     nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE register_tiling_8x8.cu -o build/v4_$SIZE
     nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE register_tiling_v5.cu  -o build/v5_$SIZE
-
+    nvcc -O3 -arch=$ARCH -DDSIZE=$SIZE cublas_bench.cu -o build/cublas_$SIZE -lcublas
+    
     ./build/v1_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v1_naive.csv
     ./build/v2_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v2_tiling.csv
     ./build/v3_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v3_regtile.csv
     ./build/v4_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v4_regtile_8x8.csv
     ./build/v5_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/v5_regtile_128tile.csv
+    ./build/cublas_$SIZE | grep '^RES' | sed 's/^RES,//' >> results/cublas_sgemm.csv
+
     echo "  N=$SIZE done"
 done
 

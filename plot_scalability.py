@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SGEMM 可扩展性图：v1 naive / v2 tiling / v3 4×4 / v4 8×8 / v5 128×128 tile"""
+"""SGEMM 可扩展性图：v1~v5 + cuBLAS 基线"""
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -17,24 +17,28 @@ df = (load('results/v1_naive.csv', 'v1')
       .merge(load('results/v2_tiling.csv', 'v2'), on='N')
       .merge(load('results/v3_regtile.csv', 'v3'), on='N')
       .merge(load('results/v4_regtile_8x8.csv', 'v4'), on='N')
-      .merge(load('results/v5_regtile_128tile.csv', 'v5'), on='N'))
+      .merge(load('results/v5_regtile_128tile.csv', 'v5'), on='N')
+      .merge(load('results/cublas_sgemm.csv', 'cb'), on='N'))
 
-for tag in ('v2', 'v3', 'v4', 'v5'):
+for tag in ('v2', 'v3', 'v4', 'v5', 'cb'):
     df[f'sp_{tag}'] = df.ms_v1 / df[f'ms_{tag}']
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6), dpi=200)
 
-# ---- 左：吞吐 ----
 series = [
-    ('v1', 'v1 Naive',                       '#d62728', 'o', '-'),
-    ('v2', 'v2 Shared Tiling 32×32',         '#2ca02c', 's', '--'),
-    ('v3', 'v3 Register Tiling 4×4',         '#1f77b4', '^', '-'),
-    ('v4', 'v4 Register Tiling 8×8',         '#ff7f0e', 'D', '-'),
-    ('v5', 'v5 128×128 tile',                '#9467bd', 'v', '-'),
+    ('cb', 'cuBLAS FP32 (strict)',      '#000000', 'x', '--'),
+    ('v1', 'v1 Naive',                  '#d62728', 'o', '-'),
+    ('v2', 'v2 Shared Tiling 32×32',    '#2ca02c', 's', '--'),
+    ('v3', 'v3 Register Tiling 4×4',    '#1f77b4', '^', '-'),
+    ('v4', 'v4 Register Tiling 8×8',    '#ff7f0e', 'D', '-'),
+    ('v5', 'v5 128×128 tile',           '#9467bd', 'v', '-'),
 ]
+
+# ---- 左：吞吐 ----
 for tag, label, color, marker, ls in series:
     peak = df[f'gf_{tag}'].max()
-    ax1.plot(df.N, df[f'gf_{tag}'], marker=marker, ls=ls, color=color, lw=2, ms=5,
+    ax1.plot(df.N, df[f'gf_{tag}'], marker=marker, ls=ls, color=color,
+             lw=2 if tag != 'cb' else 2.5, ms=5,
              label=f'{label}  (peak {peak:.0f})')
 
 ax1.axvline(N_L2, color='gray', ls='--', alpha=.7)
@@ -47,8 +51,11 @@ ax1.set_title('Effective Throughput', fontsize=13, fontweight='bold')
 ax1.grid(True, which='both', ls='--', alpha=.5)
 ax1.legend(fontsize=9)
 
+
 # ---- 右：加速比 ----
-for tag, label, color, marker, ls in series[1:]:
+for tag, label, color, marker, ls in series:
+    if tag == 'v1':
+        continue
     ax2.plot(df.N, df[f'sp_{tag}'], marker=marker, ls=ls, color=color, lw=2, ms=5,
              label=f'{tag} / v1  (max {df[f"sp_{tag}"].max():.2f}×)')
 
